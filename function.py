@@ -836,7 +836,13 @@ def lorens(price, title, xlabel, ylabel ):
     return lorenz_price
 
 def draw_y(X_test, x_col_name, y_test, y_pred, dict_y_pred):
-    figure, axes = color_graph_background(2,3)
+    nb_model = len(dict_y_pred.keys())
+    nb_col = nb_model
+    if nb_col > 3:
+        nb_col = 3
+        nb_line = nb_model / nb_col
+    
+    figure, axes = color_graph_background(nb_line,nb_col)
     i = 0
     j = 0
     for model_name, y_pred in dict_y_pred.items():
@@ -851,7 +857,7 @@ def draw_y(X_test, x_col_name, y_test, y_pred, dict_y_pred):
             axe.set_ylabel('median_house_value')
             axe.legend()
             j += 1
-            if j == 3:
+            if j == nb_col:
                 j = 0
                 i += 1
     figure.suptitle('Comparaison predictions vs expected > x='+x_col_name, fontsize=16)
